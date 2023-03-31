@@ -47,7 +47,7 @@ namespace Axxes.ToyCollector.Web
             // Allows the passing of JSON $type parameters (required for inherited types)
             mvcBuilder.AddNewtonsoftJson(jsonOptions =>
             {
-                // TODO 3: Add inherited types registrar
+                jsonOptions.SerializerSettings.Converters.Add(new InheritedTypesJsonConverter(inheritedTypesRegistry));
                 
             });
 
