@@ -29,7 +29,15 @@ namespace Axxes.ToyCollector.Core.Logic.Services
 
         private void RunCustomLogic(Toy toy)
         {
-            // TODO 4: Run custom logic
+            var creatorInterfaceType = typeof(IToyCreatorCustomLogic<>);
+            var toyType = toy.GetType();
+
+            var creator = _serviceLocator.ResolveGenericType(creatorInterfaceType, toyType);
+
+            if (creator != null && creator is IToyCreatorCustomLogic logic)
+            {
+                logic.Execute(toy);
+            }
         }
     }
 }
