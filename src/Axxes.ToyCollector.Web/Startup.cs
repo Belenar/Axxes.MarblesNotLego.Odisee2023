@@ -68,7 +68,13 @@ namespace Axxes.ToyCollector.Web
                 Path.Combine(Environment.ContentRootPath, "bin"), "Axxes.ToyCollector.Plugins.*.dll", 
                 SearchOption.AllDirectories);
 
-            // TODO 1: Add application parts
+            foreach (var pluginDll in allPluginDlls)
+            {
+                var assembly = Assembly.LoadFrom(pluginDll);
+
+                apm.ApplicationParts.Add(new AssemblyPart(assembly));
+                apm.ApplicationParts.Add(new CompiledRazorAssemblyPart(assembly));
+            }
         }
 
         private void LoadAllPlugins(IServiceCollection services, InheritedTypesRegistry inheritedTypesRegistry)
